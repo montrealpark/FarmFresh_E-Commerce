@@ -1,0 +1,71 @@
+drop database if exists farm_db;
+create database farm_db;
+
+use farm_db;
+
+create table products (
+	id bigint not null auto_increment,
+    name varchar(20) default null,
+    category varchar(15) default null,
+    price float,
+    unit varchar(20),
+    availableQty int,
+    description varchar(100) default null,
+
+    primary key (id)
+
+);
+insert products(name, category, price, unit, availableQty, description)
+values ("Tomato", "Vegetable", 12, "g", 1000, "Red Organic Tomato"),
+("Broccoli", "Vegetable", 4.99, "ea", 350, "Green Organic Broccoli"),
+("Eggplant", "Vegetable", 2.52, "g", 500, "Organic Local Eggplant"),
+("Apple", "Fruit", 1.19, "kg", 2500, "Royal Gala Apples"),
+("Mango", "Fruit", 0.99, "ea", 100, "Red Large Mangoes"),
+("Kiwi", "Fruit", 6.99, "g", 800, "Green large Kiwi"),
+("Beef", "Meat", 13.11, "kg", 550, "Striploin Bone In Beef"),
+("Chicken", "Meat", 13.93, "ea", 1200, "Fresh Free Run Chicken"),
+("Pork", "Meat", 11.15, "kg", 500, "Picnic Portion Pork Shoulder Blade Roast"),
+("Milk", "Dairy", 0.27, "ml", 750, "3.25% Fine Filtered Milk 2L"),
+("Yogurt", "Dairy", 3, "ea", 300, "Liberte Classique Strawberry Yogurt"),
+("Twist Cheese", "Dairy", 7.99, "ea", 520, "Mozzarella Cheddar Twists Natural Whole Milk Cheese");
+
+create table customer(
+    id bigint not null auto_increment,
+    first_name varchar(50) default null,
+    last_name varchar(100) default null,
+    email varchar(128) default null,
+    phone varchar(20) default null,
+    password varchar(50) default null,
+
+    primary key (id)
+);
+
+create table orders (
+	id bigint not null auto_increment,
+    orderNumber varchar(20) not null,
+    userId bigint not null,
+    total float,
+    orderDate varchar(20) not null,
+    primary key (id),
+    foreign key (userId) references customer(id)
+);
+
+
+create table orderProducts (
+	id bigint not null auto_increment,
+    orderNumber varchar(20) not null,
+    productId bigint not null,
+    primary key (id),
+    foreign key (productId) references products(id)
+
+);
+
+ create table wishlist (
+	id bigint not null auto_increment,
+    name varchar(20) default null,
+    price float,
+    unit varchar(20),
+	userId int not null,
+    productId int not null,
+    primary key (id)
+);
